@@ -8,7 +8,7 @@ from __future__ import division
 import numpy as np
 cimport numpy as np
 
-cdef class SubsampledRandomizedHadamardTransform1d:
+cdef class SubsampledRandomizedFourrierTransform1d:
     cdef np.int_t k
     cdef np.int_t n
     cdef double[:] D

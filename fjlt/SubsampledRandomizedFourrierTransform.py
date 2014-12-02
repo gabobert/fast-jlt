@@ -9,7 +9,7 @@ import numpy as np
 from random_projection_fast import fast_unitary_transform_fast, fast_unitary_transform_fast_1d, \
     inverse_fast_unitary_transform_fast_1d
 
-class SubsampledRandomizedHadamardTransform(object):
+class SubsampledRandomizedFourrierTransform(object):
     def __init__(self, k, rows=True):
         self.rows = rows
         self.k = k
@@ -71,17 +71,17 @@ def test_1d():
 
     np.random.seed(1)
     X = np.random.random_sample((n, d))
-    srht = SubsampledRandomizedHadamardTransform(k)
-    srht.fit(X[0, :])
+    srft = SubsampledRandomizedFourrierTransform(k)
+    srft.fit(X[0, :])
 
     print X.T
     print X[0, :][:, None]
     print X[0, :]
     print ''
 
-    print np.squeeze(srht.transform(np.asfortranarray(X.copy().T)).T)
-    print np.squeeze(srht.transform(np.asfortranarray(X[0, :][:, None])))
-    print srht.transform_1d(X[0, :])
+    print np.squeeze(srft.transform(np.asfortranarray(X.copy().T)).T)
+    print np.squeeze(srft.transform(np.asfortranarray(X[0, :][:, None])))
+    print srft.transform_1d(X[0, :])
 
 def test_inverse_1d():
     n, d = 1, 10
@@ -89,9 +89,9 @@ def test_inverse_1d():
 
     np.random.seed(1)
     X = np.random.random_sample((n, d))
-    srht = SubsampledRandomizedHadamardTransform(k)
-    srht.fit(X[0, :])
-    a = srht.transform_1d(X[0, :].copy())
-    x_app = srht.inverse_transform_1d(a)
+    srft = SubsampledRandomizedFourrierTransform(k)
+    srft.fit(X[0, :])
+    a = srft.transform_1d(X[0, :].copy())
+    x_app = srft.inverse_transform_1d(a)
 
     print np.c_[X.T, x_app]

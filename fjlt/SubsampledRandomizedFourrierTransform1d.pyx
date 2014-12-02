@@ -16,7 +16,7 @@ cdef extern from "fftw3.h":
     char *fftw_export_wisdom_to_string()
     int fftw_import_wisdom_from_string(const char *input_string)
 
-cdef class SubsampledRandomizedHadamardTransform1d:
+cdef class SubsampledRandomizedFourrierTransform1d:
 
     def __cinit__(self, np.int_t k, bytes wisdom):
         self.k = k

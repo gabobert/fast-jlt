@@ -11,7 +11,7 @@ random_projection = Extension("random_projection_fast",
                 libraries=["libfftw3-3.dll"])
 
 srht = Extension("SubsampledRandomizedHadamardTransform1d",
-                sources=["fjlt/SubsampledRandomizedHadamardTransform1d.pyx", "fjlt/SubsampledRandomizedHadamardTransform1d.pxd"],
+                sources=["fjlt/SubsampledRandomizedFourrierTransform1d.pyx", "fjlt/SubsampledRandomizedFourrierTransform1d.pxd"],
                 include_dirs=[numpy.get_include()],
                 libraries=["libfftw3-3.dll"])
 
@@ -19,7 +19,7 @@ setup(ext_modules=[random_projection, srht],
  cmdclass={'build_ext': build_ext})
 
 setup(name='FJLT',
-      version='1.0',
+      version='1.1',
       description='Fast Johnson Lindenstrauss Transform',
       author='Gabriel Krummenacher',
       author_email='gabriel.krummenacher@inf.ethz.ch',
