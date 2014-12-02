@@ -20,10 +20,10 @@ python setup.py install
 3. Usage
 --------
 
-From python use the class SubsampledRandomizedHadamardTransform in srht.py.
+From python use the class SubsampledRandomizedFourrierTransform in SubsampledRandomizedFourrierTransform.py
 It follows the scikit-learn interface.
-From cython use SubsampledRandomizedHadamardTransform1d in
-SubsampledRandomizedHadamardTransform1d.pxy or the functions in
+From cython use SubsampledRandomizedFourrierTransform1d in
+SubsampledRandomizedFourrierTransform1d.pyx or the functions in
 random_projection_fast.pyx directly.
 
 See demo.py for a quick demo.
