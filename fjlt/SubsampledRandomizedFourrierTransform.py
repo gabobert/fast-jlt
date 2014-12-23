@@ -31,7 +31,7 @@ class SubsampledRandomizedFourrierTransform(object):
     def inverse_transform_1d(self, a):
         x = np.zeros(self.n)
         x[self.S] = a / self.srht_const
-        return inverse_fast_unitary_transform_fast_1d(x, D=self.D)
+        return np.asarray(inverse_fast_unitary_transform_fast_1d(x, D=self.D))
 
     def transform(self, X, y=None):
         assert (y is None) or self.rows, 'If over features, cant use y'
