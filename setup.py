@@ -5,15 +5,22 @@ from distutils.core import setup
 from distutils.extension import Extension
 from Cython.Distutils import build_ext
 
+import platform
+
+if platform.system() == 'Windows':
+    fftwlib = 'libfftw3-3.dll'
+else:
+    fftwlib = 'fftw3'
+
 random_projection = Extension("random_projection_fast",
                 sources=["fjlt/random_projection_fast.pyx"],
                 include_dirs=[numpy.get_include()],
-                libraries=["libfftw3-3.dll"])
+                libraries=[fftwlib])
 
-srht = Extension("SubsampledRandomizedHadamardTransform1d",
+srht = Extension("SubsampledRandomizedFourrierTransform1d",
                 sources=["fjlt/SubsampledRandomizedFourrierTransform1d.pyx", "fjlt/SubsampledRandomizedFourrierTransform1d.pxd"],
                 include_dirs=[numpy.get_include()],
-                libraries=["libfftw3-3.dll"])
+                libraries=[fftwlib])
 
 setup(ext_modules=[random_projection, srht],
  cmdclass={'build_ext': build_ext})
