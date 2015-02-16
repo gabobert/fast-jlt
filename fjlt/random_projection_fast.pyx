@@ -45,6 +45,16 @@ cdef extern from "fftw3.h":
     char *fftw_export_wisdom_to_string()
     int fftw_import_wisdom_from_string(const char *input_string)
 
+def import_wisdom(wisdom_file):
+    with open(wisdom_file, 'r') as wsdf:
+        wisdom = wsdf.read()
+        fftw_import_wisdom_from_string(wisdom)
+
+def export_wisdom(wisdom_file):
+    wisdom = fftw_export_wisdom_to_string()
+    with open(wisdom_file, 'w') as wsdf:
+        wsdf.write(wisdom)
+
 def precompute_plan_many(np.ndarray[double, ndim=2, mode='c'] X):
     cdef np.int_t n = X.shape[0]
     cdef np.int_t d = X.shape[1]

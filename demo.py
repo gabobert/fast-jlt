@@ -6,7 +6,18 @@ http://people.inf.ethz.ch/kgabriel/software.html
 
 
 import numpy as np
+from time import time
 from fjlt.SubsampledRandomizedFourrierTransform import SubsampledRandomizedFourrierTransform
+
+def demo_1d():
+    x = np.random.randn(1000)
+    srft = SubsampledRandomizedFourrierTransform(500)
+    tic = time()
+    srft.fit(x, prefit=True)
+    print 'Prefit:', time() - tic
+    tic = time()
+    y = srft.transform_1d(x)
+    print 'Transform:', time() - tic
 
 def demo():
     X = np.asfortranarray(np.random.randn(1000, 100))
@@ -18,4 +29,5 @@ def demo():
     print(np.abs(sigma_X - sigma_Y) / sigma_Y)
 
 if __name__ == '__main__':
+    demo_1d()
     demo()

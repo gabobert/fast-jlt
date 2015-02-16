@@ -5,16 +5,28 @@ http://people.inf.ethz.ch/kgabriel/software.html
 """
 
 from __future__ import division
-import numpy as np
+
 from random_projection_fast import fast_unitary_transform_fast, fast_unitary_transform_fast_1d, \
-    inverse_fast_unitary_transform_fast_1d
+    inverse_fast_unitary_transform_fast_1d, import_wisdom, export_wisdom
+
+import numpy as np
+
 
 class SubsampledRandomizedFourrierTransform(object):
-    def __init__(self, k, rows=True):
+    def __init__(self, k, rows=True, wisdom_file=None):
         self.rows = rows
         self.k = k
+        
+        if wisdom_file is None:
+            wisdom_file = 'srft_wisdom'
 
-    def fit(self, X, y=None):
+        self.wisdom_file = wisdom_file
+        try:
+            import_wisdom(self.wisdom_file)
+        except IOError:
+            print 'wisdom file', self.wisdom_file, 'not found, not using wisdom.'
+
+    def fit(self, X, y=None, prefit=False):
         assert (y is None) or self.rows, 'If over features, cant use y'
         if not self.rows:
             X = X.T
@@ -23,6 +35,14 @@ class SubsampledRandomizedFourrierTransform(object):
         self.D = np.sign(np.random.randn(self.n))
         self.srht_const = np.sqrt(self.n / self.k)
         self.S = np.random.choice(self.n, self.k, replace=False)
+
+        if prefit:
+            if len(X.shape) == 1:
+                self.transform_1d(X)
+            else:
+                self.transform(X, y)
+
+            export_wisdom(self.wisdom_file)
 
     def transform_1d(self, x):
         a = np.asarray(fast_unitary_transform_fast_1d(x, D=self.D))
@@ -51,6 +71,9 @@ class SubsampledRandomizedFourrierTransform(object):
     def fit_transform(self, X, y=None):
         self.fit(X, y)
         return self.transform(X, y)
+
+    def __del__(self):
+        export_wisdom(self.wisdom_file)
 
 #     def inverse_transform(self, A):
 #         inv_srht_const = 1/self.srht_const
