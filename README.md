@@ -13,7 +13,7 @@ Cython and python implementation of the Fast JLT. Uses FFTW.
 2. Install
 ----------
 
-python setup.py install
+`python setup.py install`
 
 
 3. Usage
