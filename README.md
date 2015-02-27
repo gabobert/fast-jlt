@@ -1,5 +1,4 @@
 ﻿Fast Johnson-Lindenstrauss Transform (FJLT)
-
 ==========================================
 
 Cython and python implementation of the Fast JLT. Uses FFTW.
@@ -7,7 +6,7 @@ Cython and python implementation of the Fast JLT. Uses FFTW.
 
 1. Dependencies
 ---------------
-- FFTW, a fast DFT library, available from: http://www.fftw.org/download.html.
+- FFTW, a fast DFT library, available from the [fftw website](http://www.fftw.org/download.html).
 - Cython
 
 
@@ -20,9 +19,9 @@ python setup.py install
 3. Usage
 --------
 
-From python use the class SubsampledRandomizedFourrierTransform in SubsampledRandomizedFourrierTransform.py
+From python use the class `SubsampledRandomizedFourrierTransform` in SubsampledRandomizedFourrierTransform.py
 It follows the scikit-learn interface.
-From cython use SubsampledRandomizedFourrierTransform1d in
+From cython use `SubsampledRandomizedFourrierTransform1d` in
 SubsampledRandomizedFourrierTransform1d.pyx or the functions in
 random_projection_fast.pyx directly.
 
