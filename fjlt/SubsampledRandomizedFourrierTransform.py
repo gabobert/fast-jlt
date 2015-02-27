@@ -24,7 +24,7 @@ class SubsampledRandomizedFourrierTransform(object):
         try:
             import_wisdom(self.wisdom_file)
         except IOError:
-            print 'wisdom file', self.wisdom_file, 'not found, not using wisdom.'
+            print 'wisdom file', self.wisdom_file, 'not found, starting new file.'
 
     def fit(self, X, y=None, prefit=False):
         assert (y is None) or self.rows, 'If over features, cant use y'
