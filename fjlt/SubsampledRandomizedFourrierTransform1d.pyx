@@ -8,19 +8,24 @@ from __future__ import division
 cimport numpy as np
 import cython
 import numpy as np
-from random_projection_fast import inverse_fast_unitary_transform_fast_1d, fast_unitary_transform_fast_1d
+from random_projection_fast import inverse_fast_unitary_transform_fast_1d, fast_unitary_transform_fast_1d, import_wisdom, export_wisdom
 # from random_projection_fast cimport inverse_fast_unitary_transform_fast_1d, fast_unitary_transform_fast_1d, fftw_import_wisdom_from_string, fftw_export_wisdom_to_string
 import os
 
-cdef extern from "fftw3.h":
-    char *fftw_export_wisdom_to_string()
-    int fftw_import_wisdom_from_string(const char *input_string)
+# cdef extern from "fftw3.h":
+#     char *fftw_export_wisdom_to_string()
+#     int fftw_import_wisdom_from_string(const char *input_string)
 
 cdef class SubsampledRandomizedFourrierTransform1d:
 
-    def __cinit__(self, np.int_t k, bytes wisdom):
+    def __cinit__(self, np.int_t k, bytes wisdom_file):
         self.k = k
-        fftw_import_wisdom_from_string(wisdom)
+        self.wisdom_file = wisdom_file
+        
+        try:
+            import_wisdom(self.wisdom_file)
+        except IOError:
+            print 'wisdom file', self.wisdom_file, 'not found, starting new file.'
 
     cdef fit(self, double[:] X):
         self.n = X.shape[0]
@@ -44,6 +49,8 @@ cdef class SubsampledRandomizedFourrierTransform1d:
     cdef bytes get_wisdom(self):
         return fftw_export_wisdom_to_string()
 
+    def __dealloc__(self):
+        export_wisdom(self.wisdom_file)
 
 def get_include():
     return os.path.dirname(os.path.realpath(__file__))

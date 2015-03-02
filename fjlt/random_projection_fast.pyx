@@ -45,12 +45,12 @@ cdef extern from "fftw3.h":
     char *fftw_export_wisdom_to_string()
     int fftw_import_wisdom_from_string(const char *input_string)
 
-def import_wisdom(wisdom_file):
+cpdef import_wisdom(wisdom_file):
     with open(wisdom_file, 'r') as wsdf:
         wisdom = wsdf.read()
         fftw_import_wisdom_from_string(wisdom)
 
-def export_wisdom(wisdom_file):
+cpdef export_wisdom(wisdom_file):
     wisdom = fftw_export_wisdom_to_string()
     with open(wisdom_file, 'w') as wsdf:
         wsdf.write(wisdom)
