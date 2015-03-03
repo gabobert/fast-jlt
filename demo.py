@@ -8,6 +8,8 @@ http://people.inf.ethz.ch/kgabriel/software.html
 import numpy as np
 from time import time
 from fjlt.SubsampledRandomizedFourrierTransform import SubsampledRandomizedFourrierTransform
+from fjlt.demo_cython import demo_cython
+
 
 def demo_1d():
     x = np.random.randn(1000)
@@ -31,3 +33,4 @@ def demo():
 if __name__ == '__main__':
     demo_1d()
     demo()
+    demo_cython()

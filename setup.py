@@ -23,6 +23,11 @@ srft = Extension("fjlt.SubsampledRandomizedFourrierTransform1d",
                 include_dirs=[numpy.get_include()],
                 libraries=[fftwlib])
 
+demo = Extension("fjlt.demo_cython",
+                sources=["demo_cython.pyx"],
+                include_dirs=[numpy.get_include()],
+                libraries=[fftwlib])
+
 # setup(ext_modules=[random_projection, srft],
 #  cmdclass={'build_ext': build_ext})
 
@@ -37,6 +42,6 @@ setup(name='FJLT',
       packages=['fjlt'],
 #       py_modules=['demo'],
       requires=['numpy'],
-      ext_modules=cythonize([random_projection, srft]),
+      ext_modules=cythonize([random_projection, srft, demo]),
       cmdclass={'build_ext': build_ext}
      )
