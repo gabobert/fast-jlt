@@ -14,9 +14,10 @@ cdef class SubsampledRandomizedFourrierTransform1d:
     cdef double[:] D
     cdef double srht_const
     cdef np.int_t [:] S
+    cdef bytes wisdom_file
 
-    cdef fit(self, double[:] X)
+    cdef fit(self, double[:] x)
     cdef np.ndarray[double, ndim=1] transform(self, double[:] x)
     cdef np.ndarray[double, ndim=1] inverse_transform(self, np.ndarray[double, ndim=1] a)
-    cdef np.ndarray[double, ndim=1] fit_transform(self, double[:] X)
+    cdef np.ndarray[double, ndim=1] fit_transform(self, double[:] x)
     cdef bytes get_wisdom(self)
