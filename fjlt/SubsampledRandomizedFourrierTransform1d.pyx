@@ -41,7 +41,7 @@ cdef class SubsampledRandomizedFourrierTransform1d:
 
     cdef np.ndarray[double, ndim=1] inverse_transform(self, np.ndarray[double, ndim=1] a):
         cdef np.ndarray[double, ndim=1] x = np.zeros(self.n)
-        x[np.asarray(self.S)] = a / self.srht_const
+        x[np.asarray(self.S)] = a #/ self.srht_const
         return np.asarray(inverse_fast_unitary_transform_fast_1d(x, D=self.D))
 
     cdef np.ndarray[double, ndim=1] fit_transform(self, double[:] x):

@@ -34,7 +34,7 @@ demo = Extension("fjlt.demo_cython",
 exec(open('fjlt/version.py').read())
 
 setup(name='FJLT',
-      version=__version__,
+      version=__version__,  # @UndefinedVariable
       description='Fast Johnson Lindenstrauss Transform',
       author='Gabriel Krummenacher',
       author_email='gabriel.krummenacher@inf.ethz.ch',
