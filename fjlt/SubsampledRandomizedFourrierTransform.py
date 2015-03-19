@@ -45,12 +45,12 @@ class SubsampledRandomizedFourrierTransform(object):
             export_wisdom(self.wisdom_file)
 
     def transform_1d(self, x):
-        a = np.asarray(fast_unitary_transform_fast_1d(x, D=self.D))
+        a = np.asarray(fast_unitary_transform_fast_1d(x.copy(), D=self.D))
         return self.srht_const * a[self.S]
 
     def inverse_transform_1d(self, a):
         x = np.zeros(self.n)
-        x[self.S] = a / self.srht_const
+        x[self.S] = a  # / self.srht_const
         return np.asarray(inverse_fast_unitary_transform_fast_1d(x, D=self.D))
 
     def transform(self, X, y=None):
@@ -108,13 +108,14 @@ def test_1d():
 
 def test_inverse_1d():
     n, d = 1, 10
-    k = 10
+    k = 8
 
-    np.random.seed(1)
+    np.random.seed(3)
     X = np.random.random_sample((n, d))
     srft = SubsampledRandomizedFourrierTransform(k)
     srft.fit(X[0, :])
-    a = srft.transform_1d(X[0, :].copy())
+    a = srft.transform_1d(X[0, :])
     x_app = srft.inverse_transform_1d(a)
 
     print np.c_[X.T, x_app]
+    print np.linalg.norm(X), np.linalg.norm(x_app)

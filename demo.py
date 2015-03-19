@@ -7,7 +7,7 @@ http://people.inf.ethz.ch/kgabriel/software.html
 
 import numpy as np
 from time import time
-from fjlt.SubsampledRandomizedFourrierTransform import SubsampledRandomizedFourrierTransform
+from fjlt.SubsampledRandomizedFourrierTransform import SubsampledRandomizedFourrierTransform, test_inverse_1d
 from fjlt.demo_cython import demo_cython
 
 
@@ -34,3 +34,4 @@ if __name__ == '__main__':
     demo_1d()
     demo()
     demo_cython()
+    test_inverse_1d()
