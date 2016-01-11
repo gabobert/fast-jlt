@@ -44,6 +44,9 @@ cdef extern from "fftw3.h":
     void fftw_execute(const fftw_plan p)
     char *fftw_export_wisdom_to_string()
     int fftw_import_wisdom_from_string(const char *input_string)
+    
+    fftw_plan fftwf_plan_r2r(int rank, const int *n, float *input, float *output, const fftw_r2r_kind *kind, unsigned int flags)
+    void fftwf_execute_r2r(const fftw_plan p, float *input, float *output)
 
 cpdef import_wisdom(wisdom_file):
     with open(wisdom_file, 'r') as wsdf:
@@ -166,6 +169,29 @@ cpdef double[:] fast_unitary_transform_fast_1d(double[:] X, double[:] D):
 
 
     fftw_execute_r2r(fftplan, &X[0], &X[0])
+
+    X[0] /= sqrt(2)
+
+    return X
+
+@cython.boundscheck(False)
+@cython.wraparound(False)
+cpdef float[:] fast_unitary_transform_fast_1d32(float[:] X, float[:] D):
+
+    cdef np.int_t n = X.shape[0]
+
+    cdef float scale = 1 / sqrt(2 * n)
+
+    for i in range(n):
+        X[i] = scale * D[i] * X[i]
+
+    cdef int[:] dims = np.asarray([n], dtype=np.intc)
+    cdef float[:] plan_arr = np.empty(n, dtype=np.float32)
+    cdef fftw_r2r_kind kind = FFTW_REDFT10
+    cdef fftw_plan fftplan = fftwf_plan_r2r(1, &dims[0], &plan_arr[0], &plan_arr[0], &kind, 8)
+
+
+    fftwf_execute_r2r(fftplan, &X[0], &X[0])
 
     X[0] /= sqrt(2)
 

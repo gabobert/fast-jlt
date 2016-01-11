@@ -10,13 +10,18 @@ from Cython.Build.Dependencies import cythonize
 
 if platform.system() == 'Windows':
     fftwlib = 'libfftw3-3.dll'
+    fftwflib = 'libfftw3f-3.dll'
 else:
     fftwlib = 'fftw3'
+    fftwflib = 'fftw3f'
+
+# rp_libraries = [fftwflib, fftwlib]
+rp_libraries = [fftwlib]
 
 random_projection = Extension("fjlt.random_projection_fast",
                 sources=["fjlt/random_projection_fast.pyx"],
                 include_dirs=[numpy.get_include()],
-                libraries=[fftwlib])
+                libraries=rp_libraries)
 
 srft = Extension("fjlt.SubsampledRandomizedFourrierTransform1d",
                 sources=["fjlt/SubsampledRandomizedFourrierTransform1d.pyx", "fjlt/SubsampledRandomizedFourrierTransform1d.pxd"],
@@ -26,7 +31,7 @@ srft = Extension("fjlt.SubsampledRandomizedFourrierTransform1d",
 demo = Extension("fjlt.demo_cython",
                 sources=["demo_cython.pyx"],
                 include_dirs=[numpy.get_include()],
-                libraries=[fftwlib])
+                libraries=[fftwflib])
 
 # setup(ext_modules=[random_projection, srft],
 #  cmdclass={'build_ext': build_ext})

@@ -5,3 +5,5 @@
 build/
 fjlt/SubsampledRandomizedFourrierTransform1d.c
 fjlt/random_projection_fast.c
+*.so
+demo_cython.c
