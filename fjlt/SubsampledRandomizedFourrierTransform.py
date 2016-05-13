@@ -7,15 +7,16 @@ http://people.inf.ethz.ch/kgabriel/software.html
 from __future__ import division
 
 from random_projection_fast import fast_unitary_transform_fast, fast_unitary_transform_fast_1d, \
-    inverse_fast_unitary_transform_fast_1d, import_wisdom, export_wisdom
+    inverse_fast_unitary_transform_fast_1d, import_wisdom, export_wisdom, fast_unitary_transform_fast_1d32
 
 import numpy as np
 
 
 class SubsampledRandomizedFourrierTransform(object):
-    def __init__(self, k, rows=True, wisdom_file=None):
+    def __init__(self, k, rows=True, wisdom_file=None, floatX='float64'):
         self.rows = rows
         self.k = k
+        self.floatX = floatX
         
         if wisdom_file is None:
             wisdom_file = 'srft_wisdom'
@@ -35,6 +36,8 @@ class SubsampledRandomizedFourrierTransform(object):
         self.D = np.sign(np.random.randn(self.n))
         self.srht_const = np.sqrt(self.n / self.k)
         self.S = np.random.choice(self.n, self.k, replace=False)
+        if self.floatX == 'float32':
+            self.D = self.D.astype(np.float32)
 
         if prefit:
             if len(X.shape) == 1:
@@ -45,7 +48,10 @@ class SubsampledRandomizedFourrierTransform(object):
             export_wisdom(self.wisdom_file)
 
     def transform_1d(self, x):
-        a = np.asarray(fast_unitary_transform_fast_1d(x.copy(), D=self.D))
+        if self.floatX == 'float32':
+            a = np.asarray(fast_unitary_transform_fast_1d32(x.copy(), D=self.D), dtype=np.float32)
+        else:
+            a = np.asarray(fast_unitary_transform_fast_1d(x.copy(), D=self.D))
         return self.srht_const * a[self.S]
 
     def inverse_transform_1d(self, a):
