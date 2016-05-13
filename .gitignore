@@ -5,3 +5,9 @@
 build/
 fjlt/SubsampledRandomizedFourrierTransform1d.c
 fjlt/random_projection_fast.c
+libfftw3-3.def.x64
+demo_cython.c
+demo_wisdom
+libfftw3-3.dll.lib.x64
+libfftw3-3.exp
+srft_wisdom

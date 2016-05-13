@@ -30,7 +30,32 @@ def demo():
     sigma_Y = np.linalg.norm(Y, 2)
     print(np.abs(sigma_X - sigma_Y) / sigma_Y)
 
+def demo_I():
+    k, d = 2, 11
+#     X = np.eye(d)
+    nrm_X, nrm_Y2 = 0, 0
+    for i in range(100):
+        X = np.eye(d)
+        srft = SubsampledRandomizedFourrierTransform(k)
+        srft.fit(X)
+        Y1 = srft.transform(np.asfortranarray(X.copy()))
+        Y2 = srft.transform(np.asfortranarray(Y1.copy().T)).T
+#     print X
+#     print Y2
+#     print srft.srht_const ** 2
+
+#     print np.linalg.norm(X[0, :]), np.linalg.norm(Y2[0, :])
+#     print np.linalg.norm(X[:, 0]), np.linalg.norm(Y2[:, 0])
+
+        nrm_X += np.linalg.norm(X)
+        nrm_Y2 += np.linalg.norm(Y2)
+
+    print nrm_X / 100, nrm_Y2 / 100
+
 if __name__ == '__main__':
+    demo_I()
+    exit()
+
     demo_1d()
     demo()
     demo_cython()

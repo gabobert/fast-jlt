@@ -21,6 +21,7 @@ def demo_cython():
     y = srft.transform(x)
     z = srft.inverse_transform(y)
 
+    print 'cython demo:'
     print np.mean(np.abs(z-x))
     
     print np.linalg.norm(x-z)/np.sqrt(d)
