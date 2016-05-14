@@ -58,12 +58,12 @@ def test():
 
     # Over rows, full dataset
     rt = RandomizedGaussianTransform(k)
-    print rt.fit_transform(X)
-    print rt.fit_transform(X, y)
+    print(rt.fit_transform(X))
+    print(rt.fit_transform(X, y))
 
     # Over cols, full dataset
     rt = RandomizedGaussianTransform(k, rows=False)
-    print rt.fit_transform(X)
+    print(rt.fit_transform(X))
 
     # 1d transforms, inverse
     rt = RandomizedGaussianTransform(k)
@@ -71,9 +71,9 @@ def test():
     rt.fit(x)
     a = rt.transform_1d(x)
 
-    print np.linalg.norm(x), np.linalg.norm(a)
+    print(np.linalg.norm(x), np.linalg.norm(a))
 
-    print rt.inverse_transform_1d(a)
+    print(rt.inverse_transform_1d(a))
 
 
 if __name__ == '__main__':
