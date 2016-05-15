@@ -6,7 +6,7 @@ http://people.inf.ethz.ch/kgabriel/software.html
 
 from __future__ import division
 
-from random_projection_fast import fast_unitary_transform_fast, fast_unitary_transform_fast_1d, \
+from fjlt.random_projection_fast import fast_unitary_transform_fast, fast_unitary_transform_fast_1d, \
     inverse_fast_unitary_transform_fast_1d, import_wisdom, export_wisdom, fast_unitary_transform_fast_1d32
 
 import numpy as np
