@@ -4,7 +4,7 @@ Fast Johnson-Lindenstrauss Transform (FJLT)
 http://people.inf.ethz.ch/kgabriel/software.html
 """
 
-from __future__ import division
+from __future__ import division, print_function
 import cython
 import numpy as np
 import os
