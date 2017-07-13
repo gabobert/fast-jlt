@@ -60,7 +60,7 @@ cdef extern from "fftw3.h":
     void fftwf_execute_r2r(const fftw_plan p, float *input, float *output)
 
 cpdef import_wisdom(wisdom_file):
-    with open(wisdom_file, 'r') as wsdf:
+    with open(wisdom_file, 'rb') as wsdf:
         wisdom = wsdf.read()
         fftw_import_wisdom_from_string(wisdom)
 
@@ -68,7 +68,7 @@ cpdef import_wisdom(wisdom_file):
 cpdef export_wisdom(wisdom_file):
     wisdom = fftw_export_wisdom_to_string()
     print wisdom
-    with open(wisdom_file, 'w') as wsdf:
+    with open(wisdom_file, 'wb') as wsdf:
         wsdf.write(wisdom)
 
 def import_wisdom_from_string(const char *input_string):

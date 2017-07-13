@@ -6,7 +6,7 @@ http://people.inf.ethz.ch/kgabriel/software.html
 
 from __future__ import division
 
-from random_projection_fast import fast_unitary_transform_fast, fast_unitary_transform_fast_1d, \
+from fjlt.random_projection_fast import fast_unitary_transform_fast, fast_unitary_transform_fast_1d, \
     inverse_fast_unitary_transform_fast_1d, import_wisdom, export_wisdom, fast_unitary_transform_fast_1d32
 
 import numpy as np
@@ -25,7 +25,7 @@ class SubsampledRandomizedFourrierTransform(object):
         try:
             import_wisdom(self.wisdom_file)
         except IOError:
-            print 'wisdom file', self.wisdom_file, 'not found, starting new file.'
+            print('wisdom file', self.wisdom_file, 'not found, starting new file.')
 
     def fit(self, X, y=None, prefit=False):
         assert (y is None) or self.rows, 'If over features, cant use y'
@@ -103,14 +103,14 @@ def test_1d():
     srft = SubsampledRandomizedFourrierTransform(k)
     srft.fit(X[0, :])
 
-    print X.T
-    print X[0, :][:, None]
-    print X[0, :]
-    print ''
+    print(X.T)
+    print(X[0, :][:, None])
+    print(X[0, :])
+    print('')
 
-    print np.squeeze(srft.transform(np.asfortranarray(X.copy().T)).T)
-    print np.squeeze(srft.transform(np.asfortranarray(X[0, :][:, None])))
-    print srft.transform_1d(X[0, :])
+    print(np.squeeze(srft.transform(np.asfortranarray(X.copy().T)).T))
+    print(np.squeeze(srft.transform(np.asfortranarray(X[0, :][:, None]))))
+    print(srft.transform_1d(X[0, :]))
 
 def test_inverse_1d():
     n, d = 1, 10
@@ -123,5 +123,5 @@ def test_inverse_1d():
     a = srft.transform_1d(X[0, :])
     x_app = srft.inverse_transform_1d(a)
 
-    print np.c_[X.T, x_app]
-    print np.linalg.norm(X), np.linalg.norm(x_app)
+    print(np.c_[X.T, x_app])
+    print(np.linalg.norm(X), np.linalg.norm(x_app))
